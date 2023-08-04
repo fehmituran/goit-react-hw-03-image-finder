@@ -16,7 +16,7 @@ class Searchbar extends Component {
     e.preventDefault();
     const searchQuery = this.state.searchQuery.trim().toLowerCase();
     if (!searchQuery) {
-        Notiflix.Notify.info('The input field must not be empty! Try again');
+        Notiflix.Notify.warning('The input field must not be empty! Try again');
       return;
     }
     this.props.onSubmit({ ...this.state });

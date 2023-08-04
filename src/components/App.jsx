@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Notiflix from 'notiflix';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
@@ -24,12 +24,17 @@ export class App extends Component {
     const { searchQuery, page } = this.state;
 
     if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
-      this.setState({ loading: true });
+      this.setState({ isLoading: true });
 
       try {
         const response = await pixabayApi(searchQuery, page);
 
         const { hits, totalHits } = response.data;
+
+
+        if (totalHits === 0) {
+          return  Notiflix.Notify.warning(`it couldn't find  ${searchQuery} images for you,`);
+        }
 
         this.setState(prevState => ({
           images: [...prevState.images, ...hits],
@@ -38,6 +43,7 @@ export class App extends Component {
       } catch (error) {
         this.setState({ error: 'Something wrong. Please try again.' });
       } finally {
+        this.setState({ isLoading: false });
       }
     }
   }
@@ -57,11 +63,12 @@ export class App extends Component {
   render() {
     const { images, totalPage, page, isLoading } = this.state;
 
+    console.log(isLoading);
     return (
       <div>
         <Searchbar onSubmit={this.onSubmit} />
 
-        {isLoading && <Loader />}
+        {isLoading && <Loader isLoading={isLoading} />}
 
         <ImageGallery images={images} openModal={this.onOpenModal} />
 

@@ -1,24 +1,30 @@
 import React from 'react';
-import { H1 } from './Loader.styled';
+import { LoaderDiv } from './Loader.styled';
 
-import { Dna } from 'react-loader-spinner';
+import { GooeyCircleLoader } from "react-loaders-kit";
 
-const Loader = () => {
-  return (
-    <H1>
-       <Dna
-      height="80"
-      width="80"
-      ariaLabel="dna-loading"
-      wrapperStyle={{
-        display: 'block',
-        marginTop: '5px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-      }}
-    />
-    </H1>
-  );
+
+
+const Loader = ({isLoading}) => {
+  console.log({isLoading})
+const loaderProps = {
+  loading: isLoading,
+  size: 275,
+  duration: 2,
+  colors: ["#99fffe", "#f42e00", "#042549"],
 };
 
+return (
+  <LoaderDiv>
+      <GooeyCircleLoader {...loaderProps} />
+      <div
+        className="loader-text"
+        strings={["Loading..."]}
+        
+      />
+  </LoaderDiv>
+);
+}
+
 export default Loader;
+
