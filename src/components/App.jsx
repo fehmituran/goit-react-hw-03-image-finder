@@ -57,7 +57,6 @@ export class App extends Component {
   render() {
     const { images, totalPage, page, isLoading } = this.state;
 
-    console.log(isLoading);
     return (
       <div>
         <Searchbar onSubmit={this.onSubmit} />
